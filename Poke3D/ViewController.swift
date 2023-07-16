@@ -54,8 +54,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // return a 3D node in response to the detected anchor
         let node = SCNNode()
         if let imageAnchor = anchor as? ARImageAnchor {
-            
-            print(imageAnchor.referenceImage.name)
             let plane = SCNPlane(
                 width: imageAnchor.referenceImage.physicalSize.width,
                 height: imageAnchor.referenceImage.physicalSize.height)
@@ -63,24 +61,12 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             let planeNode = SCNNode(geometry: plane)
             planeNode.eulerAngles.x = -.pi / 2
             
-            if imageAnchor.referenceImage.name == "eevee" {
-                if let pokeScene = SCNScene(named: "art.scnassets/eevee.scn") {
-                    // merge all subnodes into one
-                    if let pokeNode = pokeScene.rootNode.childNodes.first {
-                        pokeNode.eulerAngles.x = .pi / 2
-                        planeNode.addChildNode(pokeNode)
-                    }
-                }
-                
-            }
-            
-            if imageAnchor.referenceImage.name == "oddish" {
-                if let pokeScene = SCNScene(named: "art.scnassets/oddish.scn") {
-                    // merge all subnodes into one
-                    if let pokeNode = pokeScene.rootNode.childNodes.first {
-                        pokeNode.eulerAngles.x = .pi / 2
-                        planeNode.addChildNode(pokeNode)
-                    }
+            let poke = imageAnchor.referenceImage.name!
+            if let pokeScene = SCNScene(named: "art.scnassets/\(poke).scn") {
+                // merge all subnodes into one
+                if let pokeNode = pokeScene.rootNode.childNodes.first {
+                    pokeNode.eulerAngles.x = .pi / 2
+                    planeNode.addChildNode(pokeNode)
                 }
             }
             node.addChildNode(planeNode)
