@@ -21,6 +21,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Show statistics such as fps and timing information
         sceneView.showsStatistics = true
+        
+        // add natural light to 3d model
+        sceneView.autoenablesDefaultLighting = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -61,6 +64,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             if let pokeScene = SCNScene(named: "art.scnassets/eevee.scn") {
                 // merge all subnodes into one
                 if let pokeNode = pokeScene.rootNode.childNodes.first {
+                    pokeNode.eulerAngles.x = .pi / 2
                     planeNode.addChildNode(pokeNode)
                 }
             }
