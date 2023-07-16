@@ -57,6 +57,13 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             plane.firstMaterial?.diffuse.contents = UIColor(white: 1.0, alpha: 0.5)
             let planeNode = SCNNode(geometry: plane)
             planeNode.eulerAngles.x = -.pi / 2
+            
+            if let pokeScene = SCNScene(named: "art.scnassets/eevee.scn") {
+                // merge all subnodes into one
+                if let pokeNode = pokeScene.rootNode.childNodes.first {
+                    planeNode.addChildNode(pokeNode)
+                }
+            }
             node.addChildNode(planeNode)
         }
         
